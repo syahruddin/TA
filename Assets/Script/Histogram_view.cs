@@ -9,16 +9,13 @@ public class Histogram_view : MonoBehaviour
     int buffer = 2;
 
     Histogram_Data data;
-    // Start is called before the first frame update
+
+
     void Start()
     {
         //testing
-        data = new Histogram_Data(3,3);
-        for(int i = 1; i <= data.get_x(); i++){
-            for(int j = 1; j <= data.get_y(); j++){
-                data.change_data(i,j,(int)Random.Range(1,10));
-            }
-        }
+        data = new_Testing_Data();
+        
         update_view();
     }
 
@@ -27,6 +24,17 @@ public class Histogram_view : MonoBehaviour
     {
         
     }
+
+    Histogram_Data new_Testing_Data(){
+        Histogram_Data data = new Histogram_Data(3,3);
+        for(int i = 1; i <= data.get_x(); i++){
+            for(int j = 1; j <= data.get_y(); j++){
+                data.change_data(i,j,(int)Random.Range(1,10));
+            }
+        }
+        return data;
+    }
+
     public void change_data(Histogram_Data data){
         this.data = data;
         update_view();
