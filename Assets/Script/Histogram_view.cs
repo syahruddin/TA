@@ -6,17 +6,14 @@ public class Histogram_view : MonoBehaviour
 {
     public GameObject box;
     public GameObject [,] view;
-    int buffer = 2;
+    public int buffer = 2;
 
-    Histogram_Data data;
+    public Histogram_Data data;
 
 
     void Start()
     {
         //testing
-        data = new_Testing_Data();
-        
-        update_view();
     }
 
     // Update is called once per frame
@@ -39,7 +36,7 @@ public class Histogram_view : MonoBehaviour
         this.data = data;
         update_view();
     }
-    void update_view(){
+    public void update_view(){
         view = new GameObject[data.get_x(),data.get_y()];
         for(int i = 0; i < data.get_x(); i++){
             for(int j = 0; j < data.get_y(); j++){
