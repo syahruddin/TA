@@ -6,7 +6,7 @@ public class Histogram_view : MonoBehaviour
 {
     public GameObject box;
     public GameObject [,] view;
-    public int buffer = 2;
+    public int buffer = 1;
 
     public Histogram_Data data;
 
@@ -41,8 +41,8 @@ public class Histogram_view : MonoBehaviour
         for(int i = 0; i < data.get_x(); i++){
             for(int j = 0; j < data.get_y(); j++){
                 view[i,j] = Instantiate(box, new Vector3(i*buffer,0,j*buffer), Quaternion.identity);
-                Debug.Log("spawn " + i + "," + j + "= " + data.get_value(i+1,j+1) );
-                view[i,j].transform.localScale = new Vector3(1,5 * data.get_value(i+1,j+1) /data.get_highest_val(),1);
+                //Debug.Log("spawn " + i + "," + j + "= " + data.get_value(i+1,j+1) );
+                view[i,j].transform.localScale = new Vector3(1,5000000 * data.get_value(i+1,j+1) /data.get_highest_val(),1);
                 view[i,j].transform.position += new Vector3(0,view[i,j].transform.localScale.y / 2,0);
             }
         }
