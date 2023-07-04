@@ -27,5 +27,11 @@ public class DOS_Data : MonoBehaviour
         Check_request_on_day data = JsonUtility.FromJson<Check_request_on_day>(request);
         return data;
     }
+    public Check_daily_request get_data(){
+        string route = "check_daily_request";
+        string request = API_Connector.connect(route);
+        Check_daily_request data = JsonUtility.FromJson<Check_daily_request>(request);
+        return data;
+    }    
 
 }
