@@ -48,6 +48,11 @@ public class Check_status_code_occurence : Request_Data{
     public string[] waktu;
     public int[] total_status;
 }
+public class Check_status_code_occurence_on_month : Month_Data{
+    public string keyword;
+    public string[] waktu;
+    public int[] total_status;
+}
 public class Check_status_code_occurence_per_ip : Day_data{
     public string keyword;
     public string[] ip_address;
