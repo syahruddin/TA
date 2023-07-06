@@ -6,7 +6,7 @@ using UnityEngine;
 public class Shared_data
 {
     public static Get_request_line_and_status_code get_request_by_ip(int day, int month, int year, string ip){
-        string route = "get_request_line_and_status_code?year=" + year + "month=" + month + "day=" + day + "ip_address=" + ip;
+        string route = "get_request_line_and_status_code?year=" + year + "&month=" + month + "&day=" + day + "&ip_address=" + ip;
         string request = API_Connector.connect(route);
         Get_request_line_and_status_code data = JsonUtility.FromJson<Get_request_line_and_status_code>(request);
         return data;

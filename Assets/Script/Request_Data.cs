@@ -18,10 +18,11 @@ public class Day_data : Month_Data
 public class Check_daily_request : Request_Data{
     public string[] waktu;
     public int[] total_request,total_object,total_client;
+
 }
 public class Check_daily_request_by_month : Month_Data{
     public string[] waktu;
-    public int[] total_request,total_object,total_client;
+    public long[] total_request,total_object,total_client;
 }
 public class Check_request_on_day : Day_data{
     public string[] ip_address;
