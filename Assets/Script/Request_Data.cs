@@ -29,6 +29,7 @@ public class Check_request_on_day : Day_data{
     public long[] total_request,total_object;
 }
 public class Get_request_line_and_status_code : Day_data{
+    public int timeless;
     public string ip_address;
     public string[] waktu;
     public string[] request_line;
