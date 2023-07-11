@@ -43,6 +43,7 @@ public class DOS_Data : MonoBehaviour
             string request = www.downloadHandler.text;
             Check_daily_request_by_month data = JsonUtility.FromJson<Check_daily_request_by_month>(request);
             viewer.change_Data(data.total_baris, data.waktu,data.total_client,"total_client", data.total_request,"total_request",data.total_object,"total_object");
+            viewer.set_date(month,year);
         }
     }
     IEnumerator get_data_by_day(int day,int month,int year){
@@ -59,6 +60,7 @@ public class DOS_Data : MonoBehaviour
             string request = www.downloadHandler.text;
             Check_request_on_day data = JsonUtility.FromJson<Check_request_on_day>(request);
             viewer.change_Data(data.total_baris, data.ip_address, data.total_request,"total_request",data.total_object,"total_object");
+            viewer.set_date(day,month,year);
         }
     }
     public Check_daily_request get_data(){
