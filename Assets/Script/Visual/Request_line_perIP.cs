@@ -6,6 +6,8 @@ using UnityEngine.Networking;
 
 public class Request_line_perIP : MonoBehaviour
 {
+    public InputField searchbar;
+    public Button filter_button;
     public GameObject isi_prefab;
     public GameObject panel_isi;
     public Text current_ip,date_text,page_number;
@@ -22,6 +24,15 @@ public class Request_line_perIP : MonoBehaviour
         seeAll.onClick.AddListener(delegate {search_ip_address(data.ip_address);});
         next_button.onClick.AddListener(delegate {next();});
         back_button.onClick.AddListener(delegate {back();});
+        filter_button.onClick.AddListener(delegate {filter();});
+    }
+    void filter(){
+        string keyword = searchbar.text;
+        if(data.timeless == 1){
+            StartCoroutine(get_request_by_ip(data.ip_address,keyword));
+        }else{
+            StartCoroutine(get_request_by_ip(data.hari,data.bulan,data.tahun,data.ip_address,keyword));
+        }
     }
 
     void testing(){
@@ -34,6 +45,46 @@ public class Request_line_perIP : MonoBehaviour
 
     public void search_ip_address(int day, int month, int year, string ip){
         StartCoroutine(get_request_by_ip(day,month,year,ip));
+    }
+    IEnumerator get_request_by_ip(int day, int month, int year, string ip, string keyword){
+        string route = "get_request_line_and_status_code?year=" + year + "&month=" + month + "&day=" + day + "&ip_address=" + ip + "&keyword=" + keyword;
+        string url = API_Connector.host + route;
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        yield return www.SendWebRequest();
+ 
+        if(www.result == UnityWebRequest.Result.ConnectionError) {
+            Debug.Log(www.error);
+        }
+        else {
+            // Show results as text
+            string request = www.downloadHandler.text;
+            data = JsonUtility.FromJson<Get_request_line_and_status_code>(request);
+            //do something here
+            page = 1;
+            number_of_page = data.total_baris/100;
+            if(data.total_baris % 100 > 0) number_of_page++;
+            visualize();
+        }
+    }
+    IEnumerator get_request_by_ip(string ip, string keyword){
+        string route = "get_request_line_and_status_code?ip_address=" + ip + "&keyword=" + keyword;
+        string url = API_Connector.host + route;
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        yield return www.SendWebRequest();
+ 
+        if(www.result == UnityWebRequest.Result.ConnectionError) {
+            Debug.Log(www.error);
+        }
+        else {
+            // Show results as text
+            string request = www.downloadHandler.text;
+            data = JsonUtility.FromJson<Get_request_line_and_status_code>(request);
+            //do something here
+            page = 1;
+            number_of_page = data.total_baris/100;
+            if(data.total_baris % 100 > 0) number_of_page++;
+            visualize();
+        }
     }
     IEnumerator get_request_by_ip(int day, int month, int year, string ip){
         string route = "get_request_line_and_status_code?year=" + year + "&month=" + month + "&day=" + day + "&ip_address=" + ip;
