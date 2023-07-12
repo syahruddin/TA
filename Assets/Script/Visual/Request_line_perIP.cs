@@ -70,6 +70,8 @@ public class Request_line_perIP : MonoBehaviour
             data = JsonUtility.FromJson<Get_request_line_and_status_code>(request);
             //do something here
             page = 1;
+            number_of_page = data.total_baris/100;
+            if(data.total_baris % 100 > 0) number_of_page++;
             visualize();
         }
     }

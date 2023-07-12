@@ -12,6 +12,7 @@ public class DOS_Data : MonoBehaviour
     {
         date.enter.onClick.AddListener(delegate {on_date_changed();});
         viewer.data_play = this;
+        viewer.data_type = 1;
 
     }
 

@@ -8,6 +8,9 @@ public class Tiga_array_bola : MonoBehaviour
 {
     public Text label_merah,label_hijau,label_biru;
     public DOS_Data data_play;
+    public Scanning_data data_scan;
+    public Injection_Data data_inject;
+    public int data_type; //1 dos, 2 scanning, 3 injection
     public GameObject selfrefer;
     public Request_line_perIP req_ui;
     public GameObject biru,merah,hijau;
@@ -15,8 +18,8 @@ public class Tiga_array_bola : MonoBehaviour
     public GameObject [] view2;
     public GameObject [] view3;
     public GameObject ofset;
-    int level = 0;
     int jarak = 2;
+    public int level;
     float ofset_value;
     List<LineRenderer> garis = new List<LineRenderer>();
     List<GameObject> label_text = new List<GameObject>();
@@ -72,7 +75,21 @@ public class Tiga_array_bola : MonoBehaviour
         Debug.Log("Data changed");
         if(!isinit){
             destroy_all();
-        //    yield return new WaitForSeconds(1);
+        }
+        visualize();
+    }
+    public void change_Data(int length, string[] label, long[] data1, string data1_name)
+    {
+        number_of_data = 1;
+        bool isinit = (this.length < 0);
+        this.length = length;
+        this.label = label;
+        this.data1 = data1;
+        this.data1_name = data1_name;
+        max_data1 = get_max(data1,length);
+        Debug.Log("Data changed");
+        if(!isinit){
+            destroy_all();
         }
         visualize();
     }
@@ -88,23 +105,27 @@ public class Tiga_array_bola : MonoBehaviour
             reset_ofset();
             reset_label();
             view1 = new GameObject[length];
-            view2 = new GameObject[length];
-            if(number_of_data == 3) view3 = new GameObject[length];
             visualize_data(view1,data1,-4,max_data1,1,biru);
             label_biru.text = data1_name;
-            visualize_data(view2,data2,0,max_data2,2,merah);
-            label_merah.text = data2_name;
-            if(number_of_data == 3) {
-                visualize_data(view3,data3,4,max_data3,3,hijau);
-                label_hijau.text = data3_name;
+            if(number_of_data > 1){
+                view2 = new GameObject[length];
+                visualize_data(view2,data2,0,max_data2,2,merah);
+                label_merah.text = data2_name;
+                if(number_of_data > 2){
+                    view3 = new GameObject[length];
+                    visualize_data(view3,data3,4,max_data3,3,hijau);
+                    label_hijau.text = data3_name;
+                    
+                }
             }
             set_label();
             set_ofset();
-            for(int i = 1; i <= length; i++){
-                draw_line_between(view1[i-1], view2[i-1]);
-                if(number_of_data == 3) draw_line_between(view2[i-1], view3[i-1]);
-            }
-            
+            if(number_of_data > 1){
+                for(int i = 1; i <= length; i++){
+                    draw_line_between(view1[i-1], view2[i-1]);
+                    if(number_of_data == 3) draw_line_between(view2[i-1], view3[i-1]);
+                }
+            }    
         }
     }
     string get_data_name(int index){
@@ -153,10 +174,7 @@ public class Tiga_array_bola : MonoBehaviour
         Vector3 position1,position2;
         position1 = object1.transform.position;
         position2 = object2.transform.position;
-
         Color color = stretch(position1,position2);
-
-
         LineRenderer line = new GameObject("Line").AddComponent<LineRenderer>();
         line.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
         line.startColor = color;
@@ -172,12 +190,31 @@ public class Tiga_array_bola : MonoBehaviour
         garis.Add(line);
     }
     public void ball_clicked(int index, int data_index){
-        if(number_of_data == 3){
-            data_play.ball_clicked(index);
+        switch(data_type){
+            case 1:
+                if(number_of_data == 3){
+                    data_play.ball_clicked(index);
+                }
+                if(number_of_data == 2){
+                    req_ui.search_ip_address(day, month, year, label[index-1]);
+                }
+                break;
+            case 2:
+                if(level == 1){
+                    data_scan.ball_clicked(index);
+                }
+                if(level == 2){
+                    req_ui.search_ip_address(day,month,year,label[index-1]);
+                }
+                
+                break;
+            case 3:
+                req_ui.search_ip_address(label[index-1]);
+                break;
+            default:
+                break;
         }
-        if(number_of_data == 2){
-            req_ui.search_ip_address(day, month, year, label[index-1]);
-        }
+
     }
     Color stretch(Vector3 a, Vector3 b){
         float height = Mathf.Abs(a.y - b.y);
