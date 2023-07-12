@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class Date_Selector_WO_Day : MonoBehaviour
 {
@@ -12,17 +13,9 @@ public class Date_Selector_WO_Day : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        set_up();
-    }
-
-    void get_date_range(){
-        string request = API_Connector.connect("get_date_range");
-        Date_Range data = JsonUtility.FromJson<Date_Range>(request);
-        this.range = data;
-        this.range.compileRange();
+        StartCoroutine(get_date_range());
     }
     void set_up(){
-        get_date_range();
         set_tahun();
         drop_tahun.onValueChanged.AddListener(delegate {on_data_changed();});
         drop_bulan.onValueChanged.AddListener(delegate {on_data_changed();});
@@ -47,7 +40,26 @@ public class Date_Selector_WO_Day : MonoBehaviour
             startdate = System.DateTime.Parse(start);
             enddate = System.DateTime.Parse(end);
         }
-
+ 
+    }
+    IEnumerator get_date_range(){
+        string route = "get_date_range";
+        string url = API_Connector.host + route;
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        yield return www.SendWebRequest();
+ 
+        if(www.result == UnityWebRequest.Result.ConnectionError) {
+            Debug.Log(www.error);
+        }
+        else {
+            // Show results as text
+            string request = www.downloadHandler.text;
+            Date_Range data = JsonUtility.FromJson<Date_Range>(request);
+            //do something here
+            this.range = data;
+            this.range.compileRange();
+            set_up();
+        }
     }
 
 }
