@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 751099830563082887}
   - component: {fileID: 8355675963723698195}
   - component: {fileID: 2669049299462845886}
+  - component: {fileID: 3363308207911943918}
+  - component: {fileID: 2362853148053001557}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -107,6 +109,50 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &3363308207911943918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107134134771481312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints: []
+--- !u!54 &2362853148053001557
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107134134771481312}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &164788636845249219
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,6 +1035,9 @@ MonoBehaviour:
   label_hijau: {fileID: 7570047115560763944}
   label_biru: {fileID: 1185537585842755430}
   data_play: {fileID: 0}
+  data_scan: {fileID: 0}
+  data_inject: {fileID: 0}
+  data_type: 0
   selfrefer: {fileID: 1550848208847990444}
   req_ui: {fileID: 489937225450420438}
   biru: {fileID: 6511013863515450808, guid: 9cb7d7a56508357a0ac8dc1761093e1f, type: 3}
@@ -998,6 +1047,7 @@ MonoBehaviour:
   view2: []
   view3: []
   ofset: {fileID: 9175109540501734378}
+  level: 0
 --- !u!1 &1645667031852585967
 GameObject:
   m_ObjectHideFlags: 0
